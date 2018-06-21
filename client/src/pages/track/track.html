@@ -1,0 +1,41 @@
+<ion-header>
+
+  <ion-navbar text-center>
+    <ion-title float-left>
+      {{myDate}} {{myTime}}
+    </ion-title>
+    <button ion-button icon-only float-right (click)= "logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+      
+
+  </ion-navbar>
+  <ion-list>
+    <ion-item>
+      <ion-input type="text" placeholder="Activity" [(ngModel)]="activityTitle"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-datetime displayFormat="HH:mm" placeholder="Start time" [(ngModel)]="myStartTime">
+      </ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-datetime displayFormat="HH:mm" placeholder="End time" [(ngModel)]="myEndTime">
+      </ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="Description (optional)" [(ngModel)]="description"></ion-input>
+    </ion-item>
+    <button ion-button float-right (click)="addActivity()">Add</button>
+  </ion-list>
+
+</ion-header>
+<!-- SCROLLING -->
+<ion-content padding>
+  <ion-list>
+    <ion-item (click)="showMore(item)" [color]="even? 'primary' : 'secondary'" *ngFor="let item of Activities;" >
+      <label float-left>{{item.activityTitle}}</label>
+      <label float-right>{{item.startTime}} - {{item.endTime}}</label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
