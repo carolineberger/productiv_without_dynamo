@@ -5,7 +5,7 @@ import { LoginPage } from '../login/login';
 import {Http} from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { Activity } from '../../../../api/controllers/productivController';
+//import { Activity } from '../../../../api/controllers/productivController';
 
 //import { DynamoDB } from '../../providers/provider'
 
