@@ -14,7 +14,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ConfirmationCodePage } from '../pages/confirmation-code/confirmation-code';
-//import { PeopleServiceProvider } from '../providers/people-service/people-service';
+import { ActivityServiceProvider } from '../providers/activity-service/activity-service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,8 +30,9 @@ import { ConfirmationCodePage } from '../pages/confirmation-code/confirmation-co
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule
-  ],
+    HttpModule, 
+    HttpClientModule
+   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
@@ -45,6 +47,7 @@ import { ConfirmationCodePage } from '../pages/confirmation-code/confirmation-co
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ActivityServiceProvider,
   ]
 })
 export class AppModule {}

@@ -4,11 +4,14 @@ var express = require('express'),
   mongoose = require('mongoose'),
   Activity = require('./models/productivModel'), //created model loading here
   bodyParser = require('body-parser');
-  
+
+  // cors
+var cors = require('cors')
+app.use(cors())
+
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/Productivdb'); 
-
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
