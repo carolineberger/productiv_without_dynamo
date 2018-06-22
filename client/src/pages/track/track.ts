@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, ToastController } from 'ionic-angular';
+import { NavController, AlertController, ToastController, ViewController } from 'ionic-angular';
 import { ActivityModel } from '../../models/ActivityModel'
 import { LoginPage } from '../login/login';
 import {ActivityServiceProvider } from '../../providers/activity-service/activity-service'
@@ -33,6 +33,8 @@ export class trackPage {
   }
 
   private refreshPage() {
+  
+    this.myTime = new Date().toLocaleTimeString('en-US', { hour: "2-digit", minute: "2-digit" });
     this.activityServiceProvider.getActivities()
     .subscribe(data => {
       // only activities for this user and this current date
@@ -115,7 +117,7 @@ export class trackPage {
             // Delete item from Activities list, might make sense for this to be move elsewhere
             this.Activities = this.Activities.filter(Activity => Activity !== item);
             console.log(item);
-            this.activityServiceProvider.deleteActivity(item).subscribe(() => console.log("user deleted"));
+            this.activityServiceProvider.deleteActivity(item).subscribe();
 
           }
         },
