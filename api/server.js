@@ -20,7 +20,7 @@ routes(app); //register the route
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/Productivdb', function (err, client) {
+mongoose.connect(process.env.MONGODB_URI, function (err, client) {
   if (err) {
     console.log(err);
     process.exit(1);
