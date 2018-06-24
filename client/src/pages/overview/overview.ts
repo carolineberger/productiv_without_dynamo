@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
-import { LoginPage } from '../login/login';
 import {ActivityServiceProvider } from '../../providers/activity-service/activity-service'
 import { ActivityModel } from '../../models/ActivityModel'
 

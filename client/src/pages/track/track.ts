@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, ToastController, ViewController } from 'ionic-angular';
 import { ActivityModel } from '../../models/ActivityModel'
-import { LoginPage } from '../login/login';
 import {ActivityServiceProvider } from '../../providers/activity-service/activity-service'
 
 @Component({
