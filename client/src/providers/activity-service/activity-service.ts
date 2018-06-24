@@ -12,7 +12,7 @@ import { Observable } from 'rxjs/Observable';
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
-let base_url = "http://localhost:3000/activity"
+let base_url = "http://localhost:8080/activity"  
 
 @Injectable()
 export class ActivityServiceProvider {

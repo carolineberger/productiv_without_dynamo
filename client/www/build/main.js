@@ -27,7 +27,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
-var base_url = "http://localhost:3000/activity";
+var base_url = "http://localhost:8080/activity";
 var ActivityServiceProvider = /** @class */ (function () {
     function ActivityServiceProvider(http) {
         this.http = http;
@@ -56,9 +56,10 @@ var ActivityServiceProvider = /** @class */ (function () {
     };
     ActivityServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
     ], ActivityServiceProvider);
     return ActivityServiceProvider;
+    var _a;
 }());
 
 //# sourceMappingURL=activity-service.js.map
@@ -283,22 +284,21 @@ var overviewPage = /** @class */ (function () {
             _this.Activities = data.filter(function (activity) { return activity.userId === _this.userId; });
         });
     };
-    overviewPage.prototype.showMore = function (item) {
+    overviewPage.prototype.showMore = function (activity) {
         var _this = this;
-        if (item.description == null) {
-            item.description = '';
+        if (activity.description == null) {
+            activity.description = '';
         }
         var alert = this.alertCtrl.create({
-            title: item.activityTitle,
-            message: item.startTime + ' - ' + item.endTime + '<br/>' + item.description,
+            title: activity.activityTitle,
+            message: activity.startTime + ' - ' + activity.endTime + '<br/>' + activity.description,
             buttons: [
                 {
                     text: 'Delete',
                     handler: function () {
                         // Delete item from Activities list, might make sense for this to be move elsewhere
-                        _this.Activities = _this.Activities.filter(function (Activity) { return Activity !== item; });
-                        console.log(item);
-                        _this.activityServiceProvider.deleteActivity(item).subscribe(function () { return console.log("user deleted"); });
+                        _this.Activities = _this.Activities.filter(function (Activity) { return Activity !== activity; });
+                        _this.activityServiceProvider.deleteActivity(activity).subscribe(function () { return console.log("user deleted"); });
                         _this.refreshActivities();
                     }
                 },
@@ -461,10 +461,12 @@ var trackPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-track',template:/*ion-inline-start:"/Users/carolineberger/Documents/abroad/UNIBO/TecnologieWeb/productiv_without_dynamo/client/src/pages/track/track.html"*/'<ion-header>\n\n  <ion-navbar text-center>\n    <ion-title float-left>\n      {{myDate}} {{myTime}}\n    </ion-title>\n    <button ion-button icon-only float-right (click)= "logout()">\n        <ion-icon name="log-out"></ion-icon>\n      </button>\n      \n\n  </ion-navbar>\n  <ion-list>\n    <ion-item>\n      <ion-input type="text" placeholder="Activity" [(ngModel)]="activityTitle"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-datetime displayFormat="HH:mm" placeholder="Start time" [(ngModel)]="myStartTime">\n      </ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-datetime displayFormat="HH:mm" placeholder="End time" [(ngModel)]="myEndTime">\n      </ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-input type="text" placeholder="Description (optional)" [(ngModel)]="description"></ion-input>\n    </ion-item>\n    <button ion-button float-right (click)="addActivity()">Add</button>\n  </ion-list>\n\n</ion-header>\n<!-- SCROLLING -->\n<ion-content padding>\n  <ion-list>\n    <ion-item (click)="showMore(item)" [color]="even? \'primary\' : \'secondary\'" *ngFor="let item of Activities;" >\n      <label float-left>{{item.activityTitle}}</label>\n      <label float-right>{{item.startTime}} - {{item.endTime}}</label>\n    </ion-item>\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/Users/carolineberger/Documents/abroad/UNIBO/TecnologieWeb/productiv_without_dynamo/client/src/pages/track/track.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_activity_service_activity_service__["a" /* ActivityServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_activity_service_activity_service__["a" /* ActivityServiceProvider */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_activity_service_activity_service__["a" /* ActivityServiceProvider */]])
     ], trackPage);
     return trackPage;
-    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=track.js.map
