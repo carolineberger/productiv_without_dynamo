@@ -21,12 +21,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-/*
-  Generated class for the ActivityServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
+// base_url is connected with the local server
+// the api/server side code is running on
 var base_url = "http://localhost:8080/activity";
 var ActivityServiceProvider = /** @class */ (function () {
     function ActivityServiceProvider(http) {
@@ -49,7 +45,14 @@ var ActivityServiceProvider = /** @class */ (function () {
         return this.http.delete(base_url + "/" + activity._id);
     };
     ActivityServiceProvider = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])()
+        // Activity Service Provider
+        // Interface for the pages to modify
+        // the Activity resource
+        // HTTP post(currentActivity, userId, date)
+        // HTTP get -> Observable<Array<ActivityModel>>
+        // HTTP delete(activity:ActivityModel)
+        ,
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
     ], ActivityServiceProvider);
     return ActivityServiceProvider;
@@ -217,10 +220,11 @@ var overviewPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-overview',template:/*ion-inline-start:"/Users/carolineberger/Documents/abroad/UNIBO/TecnologieWeb/productiv_without_dynamo/client/src/pages/overview/overview.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Overview\n    </ion-title>\n    <!--\n    <button ion-button icon-only float-right (click)= "logout()">\n        <ion-icon name="log-out"></ion-icon>\n      </button>\n    -->\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-list>\n    <ion-item (click)="showMore(activity)" [color]="even? \'primary\' : \'secondary\'" *ngFor="let activity of Activities;" >\n      <label float-left>{{activity.date}} at {{activity.startTime}} - {{activity.endTime}}</label>\n      <label float-right>{{activity.activityTitle}}</label>\n    </ion-item>\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/carolineberger/Documents/abroad/UNIBO/TecnologieWeb/productiv_without_dynamo/client/src/pages/overview/overview.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_activity_service_activity_service__["a" /* ActivityServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_activity_service_activity_service__["a" /* ActivityServiceProvider */]) === "function" && _c || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_activity_service_activity_service__["a" /* ActivityServiceProvider */]])
     ], overviewPage);
     return overviewPage;
-    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=overview.js.map
@@ -257,7 +261,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 // activities and to fetch activities
 // associated with the current date
 // and current user
-// users can delete an activity
+// a user can delete an activity
 var trackPage = /** @class */ (function () {
     function trackPage(alertCtrl, navCtrl, toastCtrl, activityServiceProvider) {
         this.alertCtrl = alertCtrl;
@@ -265,7 +269,8 @@ var trackPage = /** @class */ (function () {
         this.toastCtrl = toastCtrl;
         this.activityServiceProvider = activityServiceProvider;
         this.populatePageVars();
-        this.userId = "Test User";
+        this.userId = "Test User"; //ideally, userId is fetched from
+        // an authentication service
         this.refreshPage();
     }
     trackPage.prototype.refreshPage = function () {
@@ -276,7 +281,6 @@ var trackPage = /** @class */ (function () {
             // only activities for this user and this current date
             _this.Activities = data.filter(function (activity) { return activity.userId === _this.userId; })
                 .filter(function (activity) { return activity.date === _this.myDate; });
-            // all users activities -> this.Activities = data.filter(activity => activity.userId === this.userId)
         });
     };
     trackPage.prototype.populatePageVars = function () {
@@ -285,6 +289,7 @@ var trackPage = /** @class */ (function () {
         this.currentActivity = new __WEBPACK_IMPORTED_MODULE_2__models_ActivityModel__["a" /* ActivityModel */]();
     };
     trackPage.prototype.addActivity = function () {
+        // if/else represent error checking
         if (this.activityTitle == null) {
             this.showError('Activity must have a title.');
         }
@@ -295,6 +300,7 @@ var trackPage = /** @class */ (function () {
             this.showError('Start time must be earlier than end time.');
         }
         else {
+            // prepare activity for service
             this.currentActivity = {
                 userId: this.userId,
                 date: this.myDate,
@@ -303,7 +309,9 @@ var trackPage = /** @class */ (function () {
                 endTime: this.myEndTime.toString(),
                 description: this.description,
             };
+            // add activity to array
             this.Activities.push(this.currentActivity);
+            // sort by start time
             this.Activities.sort(function (a, b) {
                 if (a.startTime < b.startTime)
                     return -1;
@@ -336,7 +344,7 @@ var trackPage = /** @class */ (function () {
                 {
                     text: 'Delete',
                     handler: function () {
-                        // Delete item from Activities list, might make sense for this to be move elsewhere
+                        // Delete item from Activities list
                         _this.Activities = _this.Activities.filter(function (Activity) { return Activity !== item; });
                         _this.activityServiceProvider.deleteActivity(item).subscribe();
                     }
@@ -361,10 +369,12 @@ var trackPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-track',template:/*ion-inline-start:"/Users/carolineberger/Documents/abroad/UNIBO/TecnologieWeb/productiv_without_dynamo/client/src/pages/track/track.html"*/'<ion-header>\n\n  <ion-navbar text-center>\n    <ion-title float-left>\n      {{myDate}} {{myTime}}\n    </ion-title>\n    <!--\n    <button ion-button icon-only float-right (click)= "logout()">\n        <ion-icon name="log-out"></ion-icon>\n    </button>\n    -->\n\n  </ion-navbar>\n  <ion-list>\n    <ion-item>\n      <ion-input type="text" placeholder="Activity" [(ngModel)]="activityTitle"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-datetime displayFormat="HH:mm" placeholder="Start time" [(ngModel)]="myStartTime">\n      </ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-datetime displayFormat="HH:mm" placeholder="End time" [(ngModel)]="myEndTime">\n      </ion-datetime>\n    </ion-item>\n    <ion-item>\n      <ion-input type="text" placeholder="Description (optional)" [(ngModel)]="description"></ion-input>\n    </ion-item>\n    <button ion-button float-right (click)="addActivity()">Add</button>\n  </ion-list>\n\n</ion-header>\n<!-- SCROLLING -->\n<ion-content padding>\n  <ion-list>\n    <ion-item (click)="showMore(item)" [color]="even? \'primary\' : \'secondary\'" *ngFor="let item of Activities;" >\n      <label float-left>{{item.activityTitle}}</label>\n      <label float-right>{{item.startTime}} - {{item.endTime}}</label>\n    </ion-item>\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/Users/carolineberger/Documents/abroad/UNIBO/TecnologieWeb/productiv_without_dynamo/client/src/pages/track/track.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_activity_service_activity_service__["a" /* ActivityServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_activity_service_activity_service__["a" /* ActivityServiceProvider */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_activity_service_activity_service__["a" /* ActivityServiceProvider */]])
     ], trackPage);
     return trackPage;
-    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=track.js.map

@@ -30,7 +30,9 @@ export class ActivityServiceProvider {
     }).subscribe();
   }
   public getActivities(): Observable<Array<ActivityModel>>{
+
     return this.http.get<Array<ActivityModel>>(base_url);
+    
   }
 
   public deleteActivity(activity:ActivityModel): Observable<Object>{
