@@ -3,24 +3,23 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { ActivityModel } from '../../models/ActivityModel';
 import { Observable } from 'rxjs/Observable';
-
-
-
-/*
-  Generated class for the ActivityServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
-let base_url = "http://localhost:8080/activity"  
+// base_url is connected with the local server
+// the api/server side code is running on
+let base_url = "http://localhost:8080/activity" 
 
 @Injectable()
+// Activity Service Provider
+// Interface for the pages to modify
+// the Activity resource
+// HTTP post(currentActivity, userId, date)
+// HTTP get -> Observable<Array<ActivityModel>>
+// HTTP delete(activity:ActivityModel)
+
 export class ActivityServiceProvider {
   constructor(private http: HttpClient) {
 
   }
   public postActivity(currentActivity, userId, date) {
-    console.log(currentActivity);
     this.http.post(base_url, {
       userId: userId,
       date: date,
@@ -28,22 +27,14 @@ export class ActivityServiceProvider {
       startTime: currentActivity.startTime,
       endTime: currentActivity.endTime,
       description: currentActivity.description
-    }).subscribe(res => {
-      console.log(res);
-    }, err => {
-      console.log("Error occured", err);
-    });
+    }).subscribe();
   }
   public getActivities(): Observable<Array<ActivityModel>>{
     return this.http.get<Array<ActivityModel>>(base_url);
   }
 
   public deleteActivity(activity:ActivityModel): Observable<Object>{
-    console.log(activity._id);
     return this.http.delete(base_url + "/" + activity._id);
-
-
-
   }
 
 }

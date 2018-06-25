@@ -1,26 +1,25 @@
 
 var express = require('express'),
-  app = express(),
-  port = process.env.PORT || 8080,
-  mongoose = require('mongoose'),
-  Activity = require('./models/productivModel'), //created model loading here
-  bodyParser = require('body-parser');
+app = express(),
+port = process.env.PORT || 8080,
+mongoose = require('mongoose'),
+Activity = require('./models/activityModel'), 
+bodyParser = require('body-parser');
 
-  // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
-  // cors
 var cors = require('cors')
+app.use(express.static('www'));
+
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-var routes = require('./routes/productivRoutes'); //importing route
-routes(app); //register the route
+var routes = require('./routes/activityRoutes');
+routes(app); 
 
 
-// mongoose instance connection url connection
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI, function (err, client) {
+mongoose.connect('mongodb://test_user:testuser1@ds161710.mlab.com:61710/productiv_activities', function (err, client) {
   if (err) {
     console.log(err);
     process.exit(1);
@@ -29,7 +28,6 @@ mongoose.connect(process.env.MONGODB_URI, function (err, client) {
 
 
 
-  // Initialize the app.
   var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
     console.log("App now running on port", port);

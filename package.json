@@ -1,0 +1,23 @@
+{
+  "name": "productiv_without_dynamo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carolineberger/productiv_without_dynamo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carolineberger/productiv_without_dynamo/issues"
+  },
+  "homepage": "https://github.com/carolineberger/productiv_without_dynamo#readme",
+  "dependencies": {
+    "aws-amplify": "^0.4.6"
+  }
+}

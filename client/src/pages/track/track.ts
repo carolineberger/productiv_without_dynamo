@@ -1,19 +1,31 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, ToastController, ViewController } from 'ionic-angular';
+import { NavController, AlertController, ToastController } from 'ionic-angular';
 import { ActivityModel } from '../../models/ActivityModel'
-import {ActivityServiceProvider } from '../../providers/activity-service/activity-service'
+import { ActivityServiceProvider } from '../../providers/activity-service/activity-service'
 
+// TRACK PAGE
+// user can add activities from this page
+// error checking implemented to ensure
+// correct input of activity fields
+// uses ActivityServiceProvider to post
+// activities and to fetch activities
+// associated with the current date
+// and current user
+// a user can delete an activity
 @Component({
   selector: 'page-track',
   templateUrl: 'track.html'
 })
 export class trackPage {
+  // fields associated with an Acitivity
   private myDate: string;
   private myTime: string;
   private myStartTime: Date;
   private myEndTime: Date;
   private description: string;
   private activityTitle: string;
+
+
   private Activities: Array<ActivityModel>;
   private currentActivity: ActivityModel;
   private userId: string;
@@ -21,28 +33,22 @@ export class trackPage {
   constructor(
     private alertCtrl: AlertController,
     public navCtrl: NavController,
-    private toastCtrl:ToastController,
-    private activityServiceProvider:ActivityServiceProvider) {
-      this.populatePageVars();
-      this.userId = "Test User";
-      this.refreshPage();
-  
-      
-
+    private toastCtrl: ToastController,
+    private activityServiceProvider: ActivityServiceProvider) {
+    this.populatePageVars();
+    this.userId = "Test User"; //ideally, userId is fetched from
+    // an authentication service
+    this.refreshPage();
   }
 
   private refreshPage() {
-  
     this.myTime = new Date().toLocaleTimeString('en-US', { hour: "2-digit", minute: "2-digit" });
     this.activityServiceProvider.getActivities()
-    .subscribe(data => {
-      // only activities for this user and this current date
-      this.Activities = data.filter(activity => activity.userId === this.userId)
-      .filter(activity => activity.date === this.myDate);
-      // all users activities -> this.Activities = data.filter(activity => activity.userId === this.userId)
-    });
-
-    
+      .subscribe(data => {
+        // only activities for this user and this current date
+        this.Activities = data.filter(activity => activity.userId === this.userId)
+          .filter(activity => activity.date === this.myDate);
+      });
   }
 
   private populatePageVars() {
@@ -53,16 +59,18 @@ export class trackPage {
 
 
   addActivity() {
-    if( this.activityTitle == null ){
+    // if/else represent error checking
+    if (this.activityTitle == null) {
       this.showError('Activity must have a title.');
     }
-    else if(this.myStartTime == null || this.myEndTime == null){
+    else if (this.myStartTime == null || this.myEndTime == null) {
       this.showError('Activity must have a start and end time.')
     }
-    else if (this.myStartTime > this.myEndTime){
+    else if (this.myStartTime > this.myEndTime) {
       this.showError('Start time must be earlier than end time.');
     }
     else {
+      // prepare activity for service
       this.currentActivity = {
         userId: this.userId,
         date: this.myDate,
@@ -71,8 +79,9 @@ export class trackPage {
         endTime: this.myEndTime.toString(),
         description: this.description,
       };
-
+      // add activity to array
       this.Activities.push(this.currentActivity);
+      // sort by start time
       this.Activities.sort(function (a, b) {
         if (a.startTime < b.startTime)
           return -1;
@@ -90,11 +99,6 @@ export class trackPage {
       this.clearForm();
     }
   }
-
-
-  
-  
-
   private clearForm() {
     this.activityTitle = null;
     this.myStartTime = null;
@@ -103,21 +107,19 @@ export class trackPage {
   }
 
   showMore(item) {
-    if (item.description == null){
+    if (item.description == null) {
       item.description = '';
     }
     let alert = this.alertCtrl.create({
       title: item.activityTitle,
-      message: item.startTime + ' - ' + item.endTime + '<br/>' + item.description ,
+      message: item.startTime + ' - ' + item.endTime + '<br/>' + item.description,
       buttons: [
         {
           text: 'Delete',
           handler: () => {
-            // Delete item from Activities list, might make sense for this to be move elsewhere
+            // Delete item from Activities list
             this.Activities = this.Activities.filter(Activity => Activity !== item);
-            console.log(item);
             this.activityServiceProvider.deleteActivity(item).subscribe();
-
           }
         },
         {
@@ -137,16 +139,17 @@ export class trackPage {
     toast.present();
 
   }
-
-  logout(){
-    /*
-    Auth.signOut()
-    .then(data => {
-      console.log(data);
-      this.navCtrl.setRoot(LoginPage);
-    })
-    .catch(err => console.log(err));
+  /*
+    logout(){
+     
+      Auth.signOut()
+      .then(data => {
+        console.log(data);
+        this.navCtrl.setRoot(LoginPage);
+      })
+      .catch(err => console.log(err));
+      
+  
+    }
     */
-
-  }
 }
