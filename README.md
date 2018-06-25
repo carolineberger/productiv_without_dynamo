@@ -11,9 +11,9 @@ To run the client locally, from the client folder, ionic serve. http://localhost
 Hosted version of client-side code https://productiv-cdd20.firebaseapp.com/
 
 
-## Authors
+## Author
 
-* **Caroline Berger** for Web Technologies, University of Bologna June 2018. 
+*Caroline Berger* for Web Technologies, University of Bologna June 2018. 
 
 
 ## License
