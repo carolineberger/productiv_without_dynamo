@@ -3,9 +3,8 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { ActivityModel } from '../../models/ActivityModel';
 import { Observable } from 'rxjs/Observable';
-// base_url is connected with the local server
 // the api/server side code is running on
-let base_url = "http://localhost:8080/activity" 
+let base_url = "https://productivbackend.herokuapp.com/activity" 
 
 @Injectable()
 // Activity Service Provider

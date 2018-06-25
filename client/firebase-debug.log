@@ -1,0 +1,30 @@
+[debug] [2018-06-25T16:37:40.236Z] ----------------------------------------------------------------------
+[debug] [2018-06-25T16:37:40.238Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-06-25T16:37:40.238Z] CLI Version:   3.19.0
+[debug] [2018-06-25T16:37:40.238Z] Platform:      darwin
+[debug] [2018-06-25T16:37:40.238Z] Node Version:  v8.7.0
+[debug] [2018-06-25T16:37:40.239Z] Time:          Mon Jun 25 2018 18:37:40 GMT+0200 (CEST)
+[debug] [2018-06-25T16:37:40.239Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-06-25T16:37:40.250Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-06-25T16:37:40.250Z] > authorizing via signed-in user
+[debug] [2018-06-25T16:37:40.252Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/productiv-cdd20  
+  
+ Mon Jun 25 2018 18:37:40 GMT+0200 (CEST)
+[debug] [2018-06-25T16:37:40.999Z] <<< HTTP RESPONSE 200
+[debug] [2018-06-25T16:37:40.999Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/productiv-cdd20/tokens  
+  
+ Mon Jun 25 2018 18:37:40 GMT+0200 (CEST)
+[debug] [2018-06-25T16:37:41.945Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'productiv-cdd20'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing www directory for upload...
+[debug] [2018-06-25T16:37:42.893Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/productiv-cdd20/uploads/-LFrniF79NSHUS32PWnc?fileCount=34&message=  
+  
+ Mon Jun 25 2018 18:37:42 GMT+0200 (CEST)
+[debug] [2018-06-25T16:37:46.623Z] <<< HTTP RESPONSE 200
+[debug] [2018-06-25T16:37:46.623Z] [hosting] .tgz uploaded successfully, waiting for extraction
+[info] ✔  hosting: 34 files uploaded successfully
+[debug] [2018-06-25T16:37:47.226Z] [hosting] deploy completed after 4550ms
