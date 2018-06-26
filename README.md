@@ -4,6 +4,6 @@ To run the api locally, from the api folder, npm run start. http://localhost:808
 
 To run the client locally, from the client folder, ionic serve. http://localhost:8100
 
-heroku open 
+Deployed backend https://productivbackend.herokuapp.com/activity
 
-Hosted version of client-side code https://productiv-cdd20.firebaseapp.com/
+Deplyed application https://productiv-cdd20.firebaseapp.com/
